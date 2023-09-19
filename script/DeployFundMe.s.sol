@@ -2,8 +2,8 @@
 pragma solidity ^0.8.18;
 import {Script} from "forge-std/Script.sol";
 import {FundMe} from "../src/FundMe.sol";
-import {HelperConfig} from "./HelperConfig.sol";
-contract DeployMe is Script {
+import {HelperConfig} from "./HelperConfig.s.sol";
+contract DeployFundMe is Script {
 
 function run( ) external returns (FundMe)  {
 //Before start broadcast no gas tx

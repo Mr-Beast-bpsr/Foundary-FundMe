@@ -3,10 +3,11 @@
  // SPDX-License-Identifier: MIT 
  pragma solidity ^0.8.18; 
  
- import {Script} from "forg3e-std/Script.sol";
+ import {Script} from "forge-std/Script.sol";
 //  import {FundMe} from "../src/FundMe.sol";
+import {MockV3Aggregator} from "../test/Mocks/MockV3Aggregator.sol";
  
- contract HelperConfig  {
+ contract HelperConfig is  Script  {
 
 
     struct NetworkConfig{
@@ -29,8 +30,14 @@ activeNetworkConfig = getNetWorkFeedAddress();
             NetworkConfig memory sepoConfig = NetworkConfig({priceFeed:0x694AA1769357215DE4FAC081bf1f309aDC325306});
             return sepoConfig;
     }
-    function getAnvilNetwork() public pure returns(NetworkConfig memory){
+    function getAnvilNetwork() public  returns(NetworkConfig memory){
         // Returns anvil config
+
+        vm.startBroadcast();
+        MockV3Aggregator mockPriceFeed = new MockV3Aggregator(8,2000e8);
+        vm.stopBroadcast();
+        NetworkConfig memory anvilConfig = NetworkConfig({priceFeed:address(mockPriceFeed)}); 
+        return anvilConfig; 
     }
 
 } 
